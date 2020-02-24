@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=taosapi
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./taos_api:/app
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
