@@ -19,11 +19,13 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from people.views import PersonViewSet
+from dealerships.views import AutoViewSet
 
 router = DefaultRouter()
 
 # Viewset routers
 router.register(r'api/people', PersonViewSet, basename='person')
+router.register(r'api/autos', AutoViewSet, basename='auto')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

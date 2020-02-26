@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from .models import Dealership, Auto, Sale
 
-
 @admin.register(Dealership)
 class DealershipAdmin(admin.ModelAdmin):
     pass

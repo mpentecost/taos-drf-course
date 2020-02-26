@@ -41,6 +41,22 @@
 1. `docker-compose stop`
 2. `docker system prune --volumes -f`
 3. `docker image prune -af`  
+   
+**To use a Factory to create objects**
+```python
+# Create several Auto records for a single Dealership
+# Create a sales_rep and add it to that Dealership
+# Create 50 Autos for that Dealership
+# Create 50 Sale records for the sales_rep and each Auto
+from dealerships.factories import AutoFactory, DealershipFactory, SaleFactory
+from people.factories import PersonFactory
+dealership = DealershipFactory()
+sales_rep = PersonFactory()
+dealership.sales_reps.add(sales_rep)
+autos = [AutoFactory(dealer=dealership) for x in range(0,50)]
+for auto in autos:
+      SaleFactory(sales_rep=sales_rep, autos=[auto])
+```
 
 **Documentation Links:**  
 [Django](https://docs.djangoproject.com/en/3.0/)  
