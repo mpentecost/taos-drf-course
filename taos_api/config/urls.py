@@ -14,12 +14,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path
 
 from rest_framework.routers import DefaultRouter
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+import silk
 
 from people.views import PersonViewSet
 from dealerships.views import AutoViewSet
@@ -43,5 +44,6 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
-    path(r'api_docs/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui')
+    path(r'api_docs/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
+    path(r'profiler/', include('silk.urls'), name='profiler')
 ] + router.urls

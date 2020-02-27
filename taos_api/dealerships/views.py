@@ -10,7 +10,13 @@ from .models import Auto
 class AutoViewSet(ReadWriteSerializerMixin, viewsets.ModelViewSet):
     """Endpoints for the Auto model"""
 
-    queryset = Auto.objects.all()
+    prefetch_fields = ['dealer__sales_reps']
+    select_related_fields = ['dealer__general_manager']
+    queryset = (
+        Auto.objects.all()
+        .prefetch_related(*prefetch_fields)
+        .select_related(*select_related_fields)
+    )
     read_serializer_class = AutoReadSerializer
     write_serializer_class = AutoWriteSerializer
 
