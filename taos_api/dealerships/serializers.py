@@ -1,13 +1,12 @@
 from rest_framework import serializers
 
 from .models import Dealership, Auto, Sale
-
 from people.serializers import PersonSerializer
 
 class DealershipSerializer(serializers.ModelSerializer):
     """A serializer for the Dealership table"""
     general_manager = PersonSerializer()
-    sales_reps = PersonSerializer(many=True, read_only=True)
+    sales_reps = PersonSerializer(many=True)
     class Meta:
         model = Dealership
         fields = [
@@ -19,9 +18,16 @@ class DealershipSerializer(serializers.ModelSerializer):
             'sales_reps'
         ]
 
-class AutoSerializer(serializers.ModelSerializer):
-    """A serializer for the Auto table"""
+class AutoWriteSerializer(serializers.ModelSerializer):
+    """A Write serializer for the Auto table"""
+    class Meta:
+        model = Auto
+        fields = ['auto_model', 'auto_class', 'num_doors', 'dealer']
+
+
+class AutoReadSerializer(serializers.ModelSerializer):
+    """A Read serializer for the Auto Table"""
     dealer = DealershipSerializer()
     class Meta:
         model = Auto
-        fields = ['id','auto_model', 'auto_class', 'num_doors', 'dealer']
+        fields = ['id', 'auto_model', 'auto_class', 'num_doors', 'dealer']

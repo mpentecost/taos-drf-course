@@ -2,15 +2,17 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from .serializers import AutoSerializer
+from common.models import ReadWriteSerializerMixin
+from .serializers import AutoReadSerializer, AutoWriteSerializer
 from .models import Auto
 
 
-class AutoViewSet(viewsets.ModelViewSet):
+class AutoViewSet(ReadWriteSerializerMixin, viewsets.ModelViewSet):
     """Endpoints for the Auto model"""
 
     queryset = Auto.objects.all()
-    serializer_class = AutoSerializer
+    read_serializer_class = AutoReadSerializer
+    write_serializer_class = AutoWriteSerializer
 
     @action(detail=True, methods=['get'])
     def auto_test(self, request, pk=None):

@@ -63,3 +63,4 @@ for auto in autos:
 [Django Rest Framework](https://www.django-rest-framework.org/)  
 [FactoryBoy](https://factoryboy.readthedocs.io/en/latest/)  
 [Swagger YASG](https://drf-yasg.readthedocs.io/en/stable/)
+[Read and Write Serializers]()
