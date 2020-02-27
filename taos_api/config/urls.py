@@ -17,6 +17,9 @@ from django.contrib import admin
 from django.urls import path
 
 from rest_framework.routers import DefaultRouter
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
 
 from people.views import PersonViewSet
 from dealerships.views import AutoViewSet
@@ -24,9 +27,21 @@ from dealerships.views import AutoViewSet
 router = DefaultRouter()
 
 # Viewset routers
-router.register(r'api/people', PersonViewSet, basename='person')
-router.register(r'api/autos', AutoViewSet, basename='auto')
+router.register(r"api/people", PersonViewSet, basename="person")
+router.register(r"api/autos", AutoViewSet, basename="auto")
+
+# Swagger Settings
+schema_view = get_schema_view(
+    openapi.Info(
+        title='Taos DRF API',
+        default_version='v1',
+        description='Taos DRF Course test API'
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,)
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(r"admin/", admin.site.urls),
+    path(r'api_docs/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui')
 ] + router.urls
