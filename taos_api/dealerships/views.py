@@ -3,8 +3,14 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 
 from common.models import ReadWriteSerializerMixin
-from .serializers import AutoReadSerializer, AutoWriteSerializer
-from .models import Auto
+from .serializers import (
+    AutoReadSerializer,
+    AutoWriteSerializer,
+    DealershipReadSerializer,
+    DealershipWriteSerializer,
+)
+from .models import Auto, Dealership
+from .permissions import DealershipAPIPermission
 
 
 class AutoViewSet(ReadWriteSerializerMixin, viewsets.ModelViewSet):
@@ -30,3 +36,13 @@ class AutoViewSet(ReadWriteSerializerMixin, viewsets.ModelViewSet):
         """Return some static message"""
         data = {'message': 'the route is working'}
         return Response(data)
+
+
+class DealershipViewSet(ReadWriteSerializerMixin, viewsets.ModelViewSet):
+    """Endpoints for the Dealership model"""
+    permission_classes = [DealershipAPIPermission]
+
+    read_serializer_class = DealershipReadSerializer
+    write_serializer_class = DealershipWriteSerializer
+
+    queryset = Dealership.objects.all()

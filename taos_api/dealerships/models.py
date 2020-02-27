@@ -14,7 +14,16 @@ class Dealership(models.Model):
         Person, on_delete=models.CASCADE, related_name="managed_dealerships"
     )
     sales_reps = models.ManyToManyField(Person, related_name="dealerships")
-    web_users = models.ManyToManyField(User, related_name="dealerships")
+    web_users = models.ManyToManyField(
+        User, related_name="web_dealerships", blank=True
+    )
+    web_admin = models.ForeignKey(
+        User,
+        on_delete=models.DO_NOTHING,
+        related_name="admin_dealerships",
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
         """A string representation of this model"""

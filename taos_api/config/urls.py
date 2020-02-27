@@ -24,13 +24,14 @@ from drf_yasg import openapi
 import silk
 
 from people.views import PersonViewSet
-from dealerships.views import AutoViewSet
+from dealerships.views import AutoViewSet, DealershipViewSet
 
 router = DefaultRouter()
 
 # Viewset routers
 router.register(r"api/people", PersonViewSet, basename="person")
 router.register(r"api/autos", AutoViewSet, basename="auto")
+router.register(r"api/dealerships", DealershipViewSet, basename="dealers")
 
 # Swagger Settings
 schema_view = get_schema_view(
