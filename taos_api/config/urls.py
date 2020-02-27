@@ -14,6 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 from rest_framework.routers import DefaultRouter
@@ -44,6 +45,8 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path(r"admin/", admin.site.urls),
+    path(r'login/', auth_views.LoginView.as_view(), name='login'),
+    path(r'logout/', auth_views.LogoutView.as_view(), name='logout'),
     path(r'api_docs/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger-ui'),
     path(r'profiler/', include('silk.urls'), name='profiler')
 ] + router.urls
